@@ -1,0 +1,49 @@
+//Esta clase maneja los viajes y calcula comisiones y puntos según las condiciones dadas.
+public class Viaje {
+    private String codigoViaje;
+    private String nombrePasajero;
+    private String cedulaPasajero;
+    private double distancia;
+    private int mes;
+    private boolean internacional;
+    private boolean nocturno;
+    private boolean cargaPesada;
+    private String estado;
+
+    public Viaje(String codigoViaje, String nombrePasajero, String cedulaPasajero, double distancia, int mes,
+                 boolean internacional, boolean nocturno, boolean cargaPesada, String estado) {
+        this.codigoViaje = codigoViaje;
+        this.nombrePasajero = nombrePasajero;
+        this.cedulaPasajero = cedulaPasajero;
+        this.distancia = distancia;
+        this.mes = mes;
+        this.internacional = internacional;
+        this.nocturno = nocturno;
+        this.cargaPesada = cargaPesada;
+        this.estado = estado;
+    }
+
+    public double getDistancia() {
+        return distancia;
+    }
+
+    public double calcularComision() {
+        double montoBase = distancia * 10; // $10 por km
+        double bono = 0;
+
+        if (internacional) bono += montoBase * 0.15;
+        if (nocturno) bono += montoBase * 0.10;
+        if (cargaPesada) bono += montoBase * 0.20;
+        if (distancia > 200) bono += montoBase * 0.05;
+
+        return montoBase + bono;
+    }
+
+    public int calcularPuntos() {
+        int puntos = 0;
+        if (nocturno) puntos += 2;
+        if (cargaPesada) puntos += 3;
+        if (distancia > 200) puntos += 1;
+        return puntos;
+    }
+}
