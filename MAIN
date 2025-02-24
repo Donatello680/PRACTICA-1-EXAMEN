@@ -1,54 +1,46 @@
-public class Conductor {
-    private String nombre;
-    private String cedula;
-    private String codigoEmpleado;
-    private String rutaAsignada;
-    private boolean licenciaProfesional;
-    private String empresa;
-    private int totalPuntos;
-    private double totalComisiones;
-    private double totalKilometros;
-    private boolean bonoExtra;
+import javax.swing.JOptionPane;
 
-    public Conductor(String nombre, String cedula, String codigoEmpleado, String rutaAsignada, boolean licenciaProfesional, String empresa) {
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.codigoEmpleado = codigoEmpleado;
-        this.rutaAsignada = rutaAsignada;
-        this.licenciaProfesional = licenciaProfesional;
-        this.empresa = empresa;
-        this.totalPuntos = 0;
-        this.totalComisiones = 0;
-        this.totalKilometros = 0;
-        this.bonoExtra = false;
-    }
+public class Main {
+    public static void main(String[] args) {
+        // Pedir datos del conductor
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del conductor:");
+        String cedula = JOptionPane.showInputDialog("Ingrese la cédula del conductor:");
+        String codigoEmpleado = JOptionPane.showInputDialog("Ingrese el código de empleado:");
+        String rutaAsignada = JOptionPane.showInputDialog("Ingrese la ruta asignada:");
+        boolean licenciaProfesional = JOptionPane.showConfirmDialog(null, "¿Tiene licencia profesional?", "Licencia", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        String empresa = JOptionPane.showInputDialog("Ingrese el nombre de la empresa:");
 
-    // Método para registrar un viaje
-    public void registrarViaje(Viaje viaje) {
-        totalKilometros += viaje.getDistancia();
-        totalComisiones += viaje.calcularComision();
-        totalPuntos += viaje.calcularPuntos();
-    }
+        // Crear conductor
+        Conductor conductor = new Conductor(nombre, cedula, codigoEmpleado, rutaAsignada, licenciaProfesional, empresa);
 
-    // Método para calcular si el conductor recibe el bono extra
-    public void evaluarBonoExtra(int cantidadViajes) {
-        if (cantidadViajes > 5 || totalKilometros > 1000) {
-            totalComisiones += 5000;
-            totalPuntos += 5;
-            bonoExtra = true;
+        // Registrar viajes
+        int cantidadViajes = 0;
+        while (true) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea registrar un viaje?", "Registrar Viaje", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.NO_OPTION) break;
+
+            String codigoViaje = JOptionPane.showInputDialog("Ingrese el código del viaje:");
+            String nombrePasajero = JOptionPane.showInputDialog("Ingrese el nombre del pasajero:");
+            String cedulaPasajero = JOptionPane.showInputDialog("Ingrese la cédula del pasajero:");
+            double distancia = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la distancia recorrida (km):"));
+            int mes;
+            do {
+                mes = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número del mes (1-12):"));
+            } while (mes < 1 || mes > 12);
+
+            boolean internacional = JOptionPane.showConfirmDialog(null, "¿El viaje fue internacional?", "Internacional", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            boolean nocturno = JOptionPane.showConfirmDialog(null, "¿El viaje fue nocturno?", "Nocturno", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            boolean cargaPesada = JOptionPane.showConfirmDialog(null, "¿El viaje fue de carga pesada?", "Carga Pesada", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            String estado = JOptionPane.showInputDialog("Ingrese el estado del viaje (Completado, Cancelado, En proceso):");
+
+            // Crear viaje y registrar en el conductor
+            Viaje viaje = new Viaje(codigoViaje, nombrePasajero, cedulaPasajero, distancia, mes, internacional, nocturno, cargaPesada, estado);
+            conductor.registrarViaje(viaje);
+            cantidadViajes++;
         }
-    }
 
-    // Método para mostrar el resumen del conductor
-    public void mostrarResumen(int cantidadViajes) {
-        String mensaje = "El Conductor " + nombre + " código: " + codigoEmpleado + "\n" +
-                         "Recorrió un total de " + totalKilometros + " km.\n" +
-                         "Obtuvo un total en comisiones de $" + totalComisiones + ".\n" +
-                         (bonoExtra ? "✔️ El conductor logró el BONO EXTRA.\n" : "❌ No logró el bono extra.\n") +
-                         "Puntos obtenidos por el conductor: " + totalPuntos + ".\n" +
-                         (licenciaProfesional ? "✔️ Tiene licencia profesional.\n" : "❌ No tiene licencia profesional.\n") +
-                         "Ruta asignada: " + rutaAsignada + ".";
-        
-        JOptionPane.showMessageDialog(null, mensaje);
+        // Evaluar y mostrar resumen
+        conductor.evaluarBonoExtra(cantidadViajes);
+        conductor.mostrarResumen(cantidadViajes);
     }
 }
