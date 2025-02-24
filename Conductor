@@ -1,0 +1,58 @@
+import javax.swing.JOptionPane;
+
+//Esta clase almacena los datos del conductor y lleva el registro de sus viajes
+
+public class Conductor {
+    private String nombre;
+    private String cedula;
+    private String codigoEmpleado;
+    private String rutaAsignada;
+    private boolean licenciaProfesional;
+    private String empresa;
+    private int totalPuntos;
+    private double totalComisiones;
+    private double totalKilometros;
+    private boolean bonoExtra;
+
+    public Conductor(String nombre, String cedula, String codigoEmpleado, String rutaAsignada, boolean licenciaProfesional, String empresa) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.codigoEmpleado = codigoEmpleado;
+        this.rutaAsignada = rutaAsignada;
+        this.licenciaProfesional = licenciaProfesional;
+        this.empresa = empresa;
+        this.totalPuntos = 0;
+        this.totalComisiones = 0;
+        this.totalKilometros = 0;
+        this.bonoExtra = false;
+    }
+
+    // Método para registrar un viaje
+    public void registrarViaje(Viaje viaje) {
+        totalKilometros += viaje.getDistancia();
+        totalComisiones += viaje.calcularComision();
+        totalPuntos += viaje.calcularPuntos();
+    }
+
+    // Método para calcular si el conductor recibe el bono extra
+    public void evaluarBonoExtra(int cantidadViajes) {
+        if (cantidadViajes > 5 || totalKilometros > 1000) {
+            totalComisiones += 5000;
+            totalPuntos += 5;
+            bonoExtra = true;
+        }
+    }
+
+    // Método para mostrar el resumen del conductor
+    public void mostrarResumen(int cantidadViajes) {
+        String mensaje = "El Conductor " + nombre + " código: " + codigoEmpleado + "\n" +
+                         "Recorrió un total de " + totalKilometros + " km.\n" +
+                         "Obtuvo un total en comisiones de $" + totalComisiones + ".\n" +
+                         (bonoExtra ? "✔️ El conductor logró el BONO EXTRA.\n" : "❌ No logró el bono extra.\n") +
+                         "Puntos obtenidos por el conductor: " + totalPuntos + ".\n" +
+                         (licenciaProfesional ? "✔️ Tiene licencia profesional.\n" : "❌ No tiene licencia profesional.\n") +
+                         "Ruta asignada: " + rutaAsignada + ".";
+        
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+}
