@@ -1,13 +1,33 @@
-import javax.swing.JOptionPane;
+mport javax.swing.JOptionPane;
 
-public class Main {
+/**
+ *
+ * @author Francosta LuisXV
+ */
+public class PedirDatos {
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
+        // TODO code application logic here
         // Pedir datos del conductor
+
+
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del conductor:");
         String cedula = JOptionPane.showInputDialog("Ingrese la cédula del conductor:");
         String codigoEmpleado = JOptionPane.showInputDialog("Ingrese el código de empleado:");
         String rutaAsignada = JOptionPane.showInputDialog("Ingrese la ruta asignada:");
-        boolean licenciaProfesional = JOptionPane.showConfirmDialog(null, "¿Tiene licencia profesional?", "Licencia", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Tiene licencia profesional?");
+        boolean licenciaProfesional;
+
+        if (respuesta == 0) { // 0 significa "Sí"
+            licenciaProfesional = true;
+        } else {
+            licenciaProfesional = false;
+        }
+
         String empresa = JOptionPane.showInputDialog("Ingrese el nombre de la empresa:");
 
         // Crear conductor
@@ -17,7 +37,9 @@ public class Main {
         int cantidadViajes = 0;
         while (true) {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Desea registrar un viaje?", "Registrar Viaje", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.NO_OPTION) break;
+            if (opcion == JOptionPane.NO_OPTION) {
+                break;
+            }
 
             String codigoViaje = JOptionPane.showInputDialog("Ingrese el código del viaje:");
             String nombrePasajero = JOptionPane.showInputDialog("Ingrese el nombre del pasajero:");
