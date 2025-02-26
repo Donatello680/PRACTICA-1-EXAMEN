@@ -1,32 +1,22 @@
-mport javax.swing.JOptionPane;
-
-/**
- *
- * @author Francosta LuisXV
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-public class PedirDatos {
+package mainclass;
 
-    /**
-     * @param args the command line arguments
-     */
+import javax.swing.JOptionPane;
+
+public class MAINCLASS{
+
     public static void main(String[] args) {
-        // TODO code application logic here
         // Pedir datos del conductor
-
-
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del conductor:");
         String cedula = JOptionPane.showInputDialog("Ingrese la cédula del conductor:");
         String codigoEmpleado = JOptionPane.showInputDialog("Ingrese el código de empleado:");
         String rutaAsignada = JOptionPane.showInputDialog("Ingrese la ruta asignada:");
 
         int respuesta = JOptionPane.showConfirmDialog(null, "¿Tiene licencia profesional?");
-        boolean licenciaProfesional;
-
-        if (respuesta == 0) { // 0 significa "Sí"
-            licenciaProfesional = true;
-        } else {
-            licenciaProfesional = false;
-        }
+        boolean licenciaProfesional = (respuesta == 0); // 0 significa "Sí"
 
         String empresa = JOptionPane.showInputDialog("Ingrese el nombre de la empresa:");
 
@@ -34,34 +24,41 @@ public class PedirDatos {
         Conductor conductor = new Conductor(nombre, cedula, codigoEmpleado, rutaAsignada, licenciaProfesional, empresa);
 
         // Registrar viajes
- int cantidadViajes = 0;
-        while (true) {
+        int cantidadViajes = 0;
+        int intentos = 0;
+
+        while (intentos<2) {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Desea registrar un viaje?");
             if (opcion != 0) { // Si el usuario elige "No" (1), se sale del bucle
                 break;
             }
-            cantidadViajes++;
-        }
 
+            // Ingresar datos del viaje
             String codigoViaje = JOptionPane.showInputDialog("Ingrese el código del viaje:");
             String nombrePasajero = JOptionPane.showInputDialog("Ingrese el nombre del pasajero:");
             String cedulaPasajero = JOptionPane.showInputDialog("Ingrese la cédula del pasajero:");
             double distancia = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la distancia recorrida (km):"));
+
             int mes;
             do {
                 mes = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número del mes (1-12):"));
             } while (mes < 1 || mes > 12);
 
-            boolean internacional = JOptionPane.showConfirmDialog(null, "¿El viaje fue internacional?", "Internacional", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-            boolean nocturno = JOptionPane.showConfirmDialog(null, "¿El viaje fue nocturno?", "Nocturno", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-            boolean cargaPesada = JOptionPane.showConfirmDialog(null, "¿El viaje fue de carga pesada?", "Carga Pesada", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            boolean internacional = JOptionPane.showConfirmDialog(null, "¿El viaje fue internacional?") == 0;
+            boolean nocturno = JOptionPane.showConfirmDialog(null, "¿El viaje fue nocturno?") == 0;
+            boolean cargaPesada = JOptionPane.showConfirmDialog(null, "¿El viaje fue de carga pesada?") == 0;
+
             String estado = JOptionPane.showInputDialog("Ingrese el estado del viaje (Completado, Cancelado, En proceso):");
 
+           
             // Crear viaje y registrar en el conductor
             Viaje viaje = new Viaje(codigoViaje, nombrePasajero, cedulaPasajero, distancia, mes, internacional, nocturno, cargaPesada, estado);
             conductor.registrarViaje(viaje);
             cantidadViajes++;
-        }
+            intentos++;// Contador de viajes
+        } // Cierre correcto del `while`
+        
+
 
         // Evaluar y mostrar resumen
         conductor.evaluarBonoExtra(cantidadViajes);
