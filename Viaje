@@ -1,6 +1,15 @@
-//Esta clase maneja los viajes y calcula comisiones y puntos según las condiciones dadas.
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package mainclass;
+
+/**
+ *
+ * @author Francosta LuisXV
+ */
 public class Viaje {
-    private String codigoViaje;
+      private String codigoViaje;
     private String nombrePasajero;
     private String cedulaPasajero;
     private double distancia;
@@ -47,3 +56,4 @@ public class Viaje {
         return puntos;
     }
 }
+
