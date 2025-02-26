@@ -43,16 +43,29 @@ public class Conductor {
         }
     }
 
-    // Método para mostrar el resumen del conductor
-    public void mostrarResumen(int cantidadViajes) {
-        String mensaje = "El Conductor " + nombre + " código: " + codigoEmpleado + "\n" +
-                         "Recorrió un total de " + totalKilometros + " km.\n" +
-                         "Obtuvo un total en comisiones de $" + totalComisiones + ".\n" +
-                         (bonoExtra ? "✔️ El conductor logró el BONO EXTRA.\n" : "❌ No logró el bono extra.\n") +
-                         "Puntos obtenidos por el conductor: " + totalPuntos + ".\n" +
-                         (licenciaProfesional ? "✔️ Tiene licencia profesional.\n" : "❌ No tiene licencia profesional.\n") +
-                         "Ruta asignada: " + rutaAsignada + ".";
-        
-        JOptionPane.showMessageDialog(null, mensaje);
+   // Método para mostrar el resumen del conductor
+public void mostrarResumen(int cantidadViajes) {
+    String mensaje = "El Conductor " + nombre + " código: " + codigoEmpleado + "\n" +
+                     "Recorrió un total de " + totalKilometros + " km.\n" +
+                     "Obtuvo un total en comisiones de $" + totalComisiones + ".\n";
+
+    if (bonoExtra) {
+        mensaje += "✔️ El conductor logró el BONO EXTRA.\n";
+    } else {
+        mensaje += "❌ No logró el bono extra.\n";
     }
+
+    mensaje += "Puntos obtenidos por el conductor: " + totalPuntos + ".\n";
+
+    if (licenciaProfesional) {
+        mensaje += "✔️ Tiene licencia profesional.\n";
+    } else {
+        mensaje += "❌ No tiene licencia profesional.\n";
+    }
+
+    mensaje += "Ruta asignada: " + rutaAsignada + ".";
+
+    JOptionPane.showMessageDialog(null, mensaje);
+}
+
 }
