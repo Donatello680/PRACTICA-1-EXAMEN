@@ -34,12 +34,14 @@ public class PedirDatos {
         Conductor conductor = new Conductor(nombre, cedula, codigoEmpleado, rutaAsignada, licenciaProfesional, empresa);
 
         // Registrar viajes
-        int cantidadViajes = 0;
+ int cantidadViajes = 0;
         while (true) {
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea registrar un viaje?", "Registrar Viaje", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.NO_OPTION) {
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea registrar un viaje?");
+            if (opcion != 0) { // Si el usuario elige "No" (1), se sale del bucle
                 break;
             }
+            cantidadViajes++;
+        }
 
             String codigoViaje = JOptionPane.showInputDialog("Ingrese el código del viaje:");
             String nombrePasajero = JOptionPane.showInputDialog("Ingrese el nombre del pasajero:");
