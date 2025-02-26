@@ -1,9 +1,17 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package mainclass;
+
 import javax.swing.JOptionPane;
 
-//Esta clase almacena los datos del conductor y lleva el registro de sus viajes
-
+/**
+ *
+ * @author Francosta LuisXV
+ */
 public class Conductor {
-    private String nombre;
+     private String nombre;
     private String cedula;
     private String codigoEmpleado;
     private String rutaAsignada;
@@ -64,8 +72,9 @@ public void mostrarResumen(int cantidadViajes) {
     }
 
     mensaje += "Ruta asignada: " + rutaAsignada + ".";
-
+    
     JOptionPane.showMessageDialog(null, mensaje);
 }
 
 }
+
